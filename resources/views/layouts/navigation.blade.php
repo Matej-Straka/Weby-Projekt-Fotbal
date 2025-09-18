@@ -1,3 +1,7 @@
+<?php
+use App\Models\NavLink;
+$navLinks = NavLink::all();
+/**
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,7 +67,6 @@
             </div>
         </div>
     </div>
-
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
@@ -95,6 +98,46 @@
                     </x-responsive-nav-link>
                 </form>
             </div>
+        </div>
+    </div>
+</nav>
+**/
+?>
+<nav class="bg-gray-800 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="flex space-x-4">
+            @foreach($navLinks->where('is_admin_link', false)->where('is_right_aligned', false) as $link)
+                <a href="{{ url($link->url) }}" target="{{ $link->target }}" class="hover:text-gray-300">
+                    {{ $link->title }}
+                </a>
+            @endforeach
+        </div>
+
+        <div class="flex space-x-4">
+            @auth
+                @foreach($navLinks->where('is_admin_link', true)->where('is_right_aligned', false) as $link)
+                    <a href="{{ url($link->url) }}" target="{{ $link->target }}" class="hover:text-gray-300">
+                        {{ $link->title }}
+                    </a>
+                @endforeach
+
+                @foreach($navLinks->where('is_admin_link', true)->where('is_right_aligned', true) as $link)
+                    @if($link->title === 'Odhlásit')
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="hover:text-gray-300">{{ $link->title }}</a>
+                        </form>
+                    @else
+                        <a href="{{ url($link->url) }}" target="{{ $link->target }}" class="hover:text-gray-300">
+                            {{ $link->title }}
+                        </a>
+                    @endif
+                @endforeach
+            @else
+                @foreach($navLinks->where('is_admin_link', false)->where('is_right_aligned', true) as $link)
+                    <a href="{{ url($link->url) }}" target="{{ $link->target }}" class="hover:text-gray-300">{{ $link->title }}</a>
+                @endforeach
+            @endauth
         </div>
     </div>
 </nav>

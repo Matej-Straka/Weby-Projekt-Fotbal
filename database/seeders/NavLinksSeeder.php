@@ -1,6 +1,6 @@
 <?php
-
-namespace Database\Seeders;
+// database/seeders/NavLinkSeeder.php
+namespace database\seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -12,21 +12,24 @@ class NavLinksSeeder extends Seeder
      */
     public function run(): void
     {
-        // Public links
+        // Clear existing data to prevent duplicates on re-run
+        DB::table('nav_links')->truncate();
+
+        // Public and login/admin links
         DB::table('nav_links')->insert([
+            // Main navigation links
             ['title' => 'Home', 'url' => '/', 'sort_order' => 1, 'is_admin_link' => false, 'is_right_aligned' => false],
             ['title' => 'Sezóny', 'url' => '/seasons', 'sort_order' => 2, 'is_admin_link' => false, 'is_right_aligned' => false],
             ['title' => 'Týmy', 'url' => '/teams', 'sort_order' => 3, 'is_admin_link' => false, 'is_right_aligned' => false],
-            ['title' => 'Administrace', 'url' => '/admin', 'sort_order' => 4, 'is_admin_link' => false, 'is_right_aligned' => true],
+
+            // Administration link (visible to all, leads to login or dashboard)
+            ['title' => 'Administrace', 'url' => '/dashboard', 'sort_order' => 4, 'is_admin_link' => false, 'is_right_aligned' => true],
         ]);
 
-        // Get the ID of the 'Administrace' link to use as the parent for admin links
-        $adminLinkId = DB::table('nav_links')->where('title', 'Administrace')->value('id');
-
-        // Admin links
+        // Admin-only links (only shown when authenticated)
         DB::table('nav_links')->insert([
-            ['title' => 'Odhlásit', 'url' => '/logout', 'sort_order' => 1, 'is_admin_link' => true, 'is_right_aligned' => true, 'parent_id' => $adminLinkId],
-            ['title' => 'Správa článků', 'url' => '/admin/articles', 'sort_order' => 2, 'is_admin_link' => true, 'is_right_aligned' => false, 'parent_id' => $adminLinkId],
+            ['title' => 'Správa článků', 'url' => '/admin/articles', 'sort_order' => 1, 'is_admin_link' => true, 'is_right_aligned' => false],
+            ['title' => 'Odhlásit', 'url' => '/logout', 'sort_order' => 2, 'is_admin_link' => true, 'is_right_aligned' => true],
         ]);
     }
 }
