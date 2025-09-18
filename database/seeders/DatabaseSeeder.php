@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
             LeagueSeeder::class,
             SeasonSeeder::class,
             LeagueSeasonSeeder::class,
-            NavLinksSeeder::class
+            NavLinksSeeder::class,
+            TeamSeeder::class,
+            ArticleSeeder::class,
         ]);
     }
 }

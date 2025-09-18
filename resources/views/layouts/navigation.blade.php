@@ -133,7 +133,6 @@ $navLinks = NavLink::all();
                         </a>
                     @endif
                 @endforeach
-            @else
                 @foreach($navLinks->where('is_admin_link', false)->where('is_right_aligned', true) as $link)
                     <a href="{{ url($link->url) }}" target="{{ $link->target }}" class="hover:text-gray-300">{{ $link->title }}</a>
                 @endforeach
