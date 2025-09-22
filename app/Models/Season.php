@@ -9,4 +9,9 @@ class Season extends Model
 {
     use HasFactory;
     protected $table = 'season';
+
+    public function leagues()
+    {
+        return $this->belongsToMany(League::class, 'league_season', 'id_season', 'id_league')->using(SeasonLeague::class)->withPivot('id');
+    }
 }

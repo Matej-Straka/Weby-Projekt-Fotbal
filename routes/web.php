@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\TeamController;
 //php
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,11 @@ Route::get('/dashboard', function () {
 
 Route::get('/article/{id}', [ArticleController::class, 'show'])->name('article.show');
 Route::get('/seasons', [SeasonController::class, 'index'])->name('season.index');
+Route::get('/season/{id}', [SeasonController::class, 'show'])->name('season.show');
+Route::get('/season/{season}/league/{league}', [SeasonController::class, 'showLeagueMatches'])->name('season.league.matches');
+Route::get('/game/{id}', [SeasonController::class, 'showGameDetails'])->name('game.show');
+Route::get('/team/{id}', [\App\Http\Controllers\TeamController::class, 'show'])->name('team.show');
+Route::get('/teams', [TeamController::class, 'index'])->name('team.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
