@@ -28,7 +28,7 @@ class NavLinksSeeder extends Seeder
 
         // Admin-only links (only shown when authenticated)
         DB::table('nav_links')->insert([
-            ['title' => 'Správa článků', 'url' => '/admin/articles', 'sort_order' => 1, 'is_admin_link' => true, 'is_right_aligned' => false],
+            ['title' => 'Správa článků', 'url' => '/admin/article', 'sort_order' => 1, 'is_admin_link' => true, 'is_right_aligned' => false],
             ['title' => 'Odhlásit', 'url' => '/logout', 'sort_order' => 2, 'is_admin_link' => true, 'is_right_aligned' => true],
         ]);
     }

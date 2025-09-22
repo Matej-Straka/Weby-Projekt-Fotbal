@@ -8,9 +8,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
+                <div class="">
                     <div class="mb-4">
-                        <img src="{{ $article->photo }}" alt="{{ $article->title }}" class="w-full h-auto rounded-lg">
+
+                        <img src="{{ Storage::url('public/Sigma/'.$article->photo) }}" alt="{{ $article->title }}" class="w-auto h-auto rounded-lg">
                     </div>
                     <div class="text-gray-700">
                         {!! $article->text !!}
